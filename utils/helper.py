@@ -26,10 +26,10 @@ def soldier_data_validation(data: dict):
 
             if error_type == 'missing':
                 logger.error(f'missing: {field_name} in data.')
-                return (error_type, field_name)
+                
             else:
                 logger.error(f'Invalid {field_name} in data, error: {error_msg}')
-                return (error_type, field_name)
+            return (error_type, field_name)
          
         
 def get_soldier_by_id(soldiers: list, soldier_id: int):
