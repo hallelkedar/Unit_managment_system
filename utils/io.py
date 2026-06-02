@@ -61,8 +61,8 @@ def update_soldier(soldier_id: int, data: dict):
 
             write_back_to_json(soldiers, f)
             logger.info(f'Soldier {soldier['id']} updated.')
-        else:
-            return False
+            return True
+        return False
 
 def delete_soldier(soldier_id):
     with open(file_name, 'r+', encoding='utf-8') as f:
@@ -74,5 +74,5 @@ def delete_soldier(soldier_id):
 
             write_back_to_json(soldiers, f)
             logger.info(f'Soldier {soldier['id']} deleted.')
-        else:
-            return False
+            return True
+        return False
