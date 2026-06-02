@@ -3,6 +3,7 @@
 The **Unit Management System** is a robust solution designed to streamline the administration, tracking, and organization of organizational units, assets, and soldier records. This repository contains the core logic, API architecture, and interfaces for managing these units efficiently.
 
 ---
+```
 Unit_managment_system/
 │
 ├── main.py
@@ -15,7 +16,7 @@ Unit_managment_system/
 │
 └── requirements.txt
 └── readme.md
-
+```
 ## 📊 System Endpoints & API
 
 The following table summarizes the system's endpoints as defined in `Unit managment endpoints.xlsx`:
