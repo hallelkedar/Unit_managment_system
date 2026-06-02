@@ -1,6 +1,7 @@
 import os
 import json
 from logger_config import logger
+from helper import get_soldier_by_id, write_back_to_json
 
 file_name = 'soldiers.json'
 
@@ -8,17 +9,6 @@ if not os.path.exists(file_name):
     with open(file_name, 'w', encoding='utf-8') as f:
         data = []
         json.dump(data, f, indent=2)
-
-def get_soldier_by_id(soldiers: dict, soldier_id: int):
-    for soldier in soldiers:
-            if soldier['id'] == soldier_id:
-                return soldier
-    return None
-
-def write_back_to_json(data, file):
-    file.seek(0)
-    json.dump(data, file, indent=2)
-    file.truncate()
     
 def get_all_soldiers():
     
