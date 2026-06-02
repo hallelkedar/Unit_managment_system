@@ -1,0 +1,29 @@
+[
+  {
+    "full_name": "Yonatan Cohen",
+    "personal_number": "8123456",
+    "rank": "Lieutenant",
+    "role": "Platoon Commander",
+    "unit": "Golani Brigade",
+    "status": "Active Duty",
+    "id": 1
+  },
+  {
+    "id": 2,
+    "full_name": "Noa Levi",
+    "personal_number": "9543210",
+    "rank": "Sergeant",
+    "role": "Software Developer",
+    "unit": "Mamram",
+    "status": "Mandatory Service"
+  },
+  {
+    "id": 3,
+    "full_name": "Avi Mizrahi",
+    "personal_number": "7654321",
+    "rank": "Chief Sergeant",
+    "role": "Ordnance Department Manager",
+    "unit": "7th Armored Brigade",
+    "status": "Career"
+  }
+]
