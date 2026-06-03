@@ -1,4 +1,5 @@
 from utils import io
+from utils.helper import SoldierCreate
 from fastapi import FastAPI, status, HTTPException
 from logger_config import logger
 import json
@@ -39,54 +40,50 @@ def get_soldier(soldier_id: int):
         
     except FileNotFoundError:
         logger.error('File not found')
-        raise HTTPException(500, 'Internal Server Error')
     
     except json.JSONDecodeError as e:
         logger.error('Invalid json file')
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, 'Internal Server Error')
+    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, 'Internal Server Error')
 
 @app.post('/soldiers', status_code=201)
-def create_soldier(data: dict):
+def create_soldier(data: SoldierCreate):
     try:
         logger.info('Try to create new soldier')
-        is_create, value = io.create_soldier(data)
+        soldier_dict = data.model_dump()
         
-        if not is_create:
-            logger.error('Soldier was not created, Invalid soldier data')
-            raise HTTPException(422, f'Invalid Field: {value[0]}, Error: {value[1]}')
+        new_id = io.create_soldier(soldier_dict)
         
         logger.info('New soldier created.')
-        return {'msg': f'New soldier created. (ID:{value})'}
+        return {'msg': f'New soldier created. (ID:{new_id})'}
 
     except FileNotFoundError:
         logger.error('File not found')
-        raise HTTPException(500, 'Internal Server Error')
     
     except json.JSONDecodeError as e:
         logger.error('Server database file is corrupted')
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, 'Internal Server Error')
+    
+    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, 'Internal Server Error')
     
 @app.put('/soldiers/{soldier_id}', status_code=200)
-def update_soldier(soldier_id: int, data: dict):
+def update_soldier(soldier_id: int, data: SoldierCreate):
     try:
         logger.info('Try to update soldier')
-        is_updated, value = io.update_soldier(soldier_id, data)
+        soldier_dict = data.model_dump()
+        is_updated = io.update_soldier(soldier_id, soldier_dict)
         
         if not is_updated:
-            if value:
-                raise HTTPException(422, f'Invalid Field: {value[0]}, Error: {value[1]}')
             raise HTTPException(404, 'ID was not found')
         
-        logger.info(f'Soldier {value} updated.')
+        logger.info(f'Soldier {soldier_id} updated.')
         return {'msg': f'Soldier - {soldier_id} - updated.'}
     
     except FileNotFoundError:
         logger.error('File not found')
-        raise HTTPException(500, 'Internal Server Error')
-    
+        
     except json.JSONDecodeError as e:
         logger.error('Server database file is corrupted')
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, 'Internal Server Error')
+
+    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, 'Internal Server Error')
 
 @app.delete('/soldiers/{soldier_id}', status_code=200)
 def delete_soldier(soldier_id: int):
@@ -101,8 +98,7 @@ def delete_soldier(soldier_id: int):
     
     except FileNotFoundError:
         logger.error('File not found')
-        raise HTTPException(500, 'Internal Server Error')
    
     except json.JSONDecodeError as e:
         logger.error('Server database file is corrupted')
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, 'Internal Server Error')
+    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, 'Internal Server Error')

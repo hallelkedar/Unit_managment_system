@@ -36,38 +36,31 @@ def get_soldier(soldier_id: int):
     return get_soldier_by_id(soldiers, soldier_id)
     
 def create_soldier(data: dict):
+
     with open(FILE_NAME, 'r+', encoding='utf-8') as f:
         soldiers: list = json.load(f)
         next_id = max(soldier['id'] for soldier in soldiers) + 1 if soldiers else 1
         data['id'] = next_id
-        validation = soldier_data_validation(data)
-        if validation == data:
-            soldiers.append(data)
 
-            write_back_to_json(soldiers, f)
-            return True, next_id
-        return False, validation
+        soldiers.append(data)
+        write_back_to_json(soldiers, f)
+        return next_id
         
 
 def update_soldier(soldier_id: int, data: dict):
     with open(FILE_NAME, 'r+', encoding='utf-8') as f:
         
-        soldiers = json.load(f)
+        soldiers: list = json.load(f)
         soldier:dict | None = get_soldier_by_id(soldiers, soldier_id)
         
         if not soldier:
             logger.error('ID was not found')
-            return False, None
-        
-        validation = soldier_data_validation(data)
-        if validation == data:
-            soldier.update(data)
-
-            write_back_to_json(soldiers, f)
-            return True, soldier['id']
-        
-        return False, validation
-
+            return False
+        soldiers.update(data)
+        soldier['id'] = soldier_id
+        write_back_to_json(soldiers, f)
+        return True
+    
 def delete_soldier(soldier_id: int):
     
     with open(FILE_NAME, 'r+', encoding='utf-8') as f:
