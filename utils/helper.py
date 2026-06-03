@@ -1,4 +1,5 @@
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
+from typing import Optional
 from logger_config import logger
 
 class SoldierCreate(BaseModel):
@@ -11,12 +12,12 @@ class SoldierCreate(BaseModel):
     status: str
 
 class SoldierUpdate(BaseModel):
-    full_name: str | None = None
-    personal_number: str | None = None
-    rank: str | None = None
-    role: str | None = None
-    unit: str | None = None
-    status: str | None = None
+    full_name: Optional[str] = None
+    personal_number: Optional[str] = None
+    rank: Optional[str] = None
+    role: Optional[str] = None
+    unit: Optional[str] = None
+    status: Optional[str] = None
 
 class SoldierProfile(SoldierCreate):
     id: int
@@ -25,5 +26,6 @@ class SoldierProfile(SoldierCreate):
 def get_soldier_by_id(soldiers: list, soldier_id: int):
     for soldier in soldiers:
             if soldier.get('id') == soldier_id:
+                logger.info('ID was found.')
                 return soldier
     return None

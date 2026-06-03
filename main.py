@@ -73,7 +73,7 @@ def create_soldier(data: SoldierCreate):
 def update_soldier(soldier_id: int, data: SoldierUpdate):
     
     logger.info('Try to update soldier')
-    soldier_dict = data.model_dump()
+    soldier_dict = data.model_dump(exclude_unset=True)
     is_updated = io.update_soldier(soldier_id, soldier_dict)
     
     if not is_updated:
