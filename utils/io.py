@@ -1,7 +1,7 @@
 import os
 import json
 from logger_config import logger
-from utils.helper import get_soldier_by_id, soldier_data_validation
+from utils.helper import get_soldier_by_id
 
 FILE_NAME = 'soldiers.json'
 
