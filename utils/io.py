@@ -56,7 +56,11 @@ def update_soldier(soldier_id: int, data: dict):
         if not soldier:
             logger.error('ID was not found')
             return False
-        soldier.update(data)
+        
+        update_dict = data.model_dump(exclude_unset=True)
+
+        soldier.update(update_dict)
+        
         soldier['id'] = soldier_id
         write_back_to_json(soldiers, f)
         return True
