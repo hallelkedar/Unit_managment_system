@@ -10,6 +10,14 @@ class SoldierCreate(BaseModel):
     unit: str
     status: str
 
+class SoldierUpdate(BaseModel):
+    full_name: str | None = None
+    personal_number: str | None = None
+    rank: str | None = None
+    role: str | None = None
+    unit: str | None = None
+    status: str | None = None
+
 class SoldierProfile(SoldierCreate):
     id: int
          
