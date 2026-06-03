@@ -1,5 +1,5 @@
 from utils import io
-from utils.helper import SoldierCreate
+from utils.helper import SoldierCreate, SoldierUpdate, SoldierProfile
 from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.responses import JSONResponse
 from logger_config import logger
@@ -45,7 +45,7 @@ def get_soldiers():
     return soldiers
 
 
-@app.get('/soldiers/{soldier_id}', status_code=200)
+@app.get('/soldiers/{soldier_id}', status_code=200, response_model=SoldierProfile)
 def get_soldier(soldier_id: int):
 
     logger.info('Try to get soldier')
@@ -70,7 +70,7 @@ def create_soldier(data: SoldierCreate):
     return {'msg': f'New soldier created. (ID:{new_id})'}
     
 @app.put('/soldiers/{soldier_id}', status_code=200)
-def update_soldier(soldier_id: int, data: SoldierCreate):
+def update_soldier(soldier_id: int, data: SoldierUpdate):
     
     logger.info('Try to update soldier')
     soldier_dict = data.model_dump()
